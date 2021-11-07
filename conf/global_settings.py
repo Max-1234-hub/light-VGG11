@@ -1,6 +1,6 @@
 """ configurations for this project
 
-author baiyu
+author axiu mao
 """
 
 from datetime import datetime
