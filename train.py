@@ -257,7 +257,7 @@ if __name__ == '__main__':
     #create checkpoint folder to save model
     if not os.path.exists(checkpoint_path):
         os.makedirs(checkpoint_path)
-    checkpoint_path_pth = os.path.join(checkpoint_path, '{net}-{epoch}-{type}.pth')
+    checkpoint_path_pth = os.path.join(checkpoint_path, '{net}-{type}.pth')
 
     best_acc = 0.0
     Train_Loss = []
@@ -265,6 +265,8 @@ if __name__ == '__main__':
     Valid_Loss = []
     Valid_Accuracy = []
     f1_s = []
+    best_epoch = 1
+    best_weights_path = checkpoint_path_pth.format(net=args.net, type='best')
     for epoch in range(1, args.epoch + 1):
             
         net = train(train_loader, net, optimizer, epoch, loss_function)
@@ -272,11 +274,10 @@ if __name__ == '__main__':
         
         #start to save best performance model (according to the accuracy on validation dataset) after learning rate decay to 0.01
         if epoch > settings.MILESTONES[0] and best_acc < acc:
-            best_weights_path = checkpoint_path_pth.format(net=args.net, epoch=epoch, type='best')
-            print(best_weights_path)
-            print('saving weights file to {}'.format(best_weights_path))
             best_acc = acc
-    torch.save(net.state_dict(), best_weights_path)
+            best_epoch = epoch
+            torch.save(net.state_dict(), best_weights_path)
+    print('best epoch is {}'.format(best_epoch))
     
     #####Output results
     #plot train loss and accuracy vary over time
