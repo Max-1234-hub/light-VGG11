@@ -2,7 +2,7 @@
 light-VGG11 is the lightweight version of VGG11, which is used for identifying chicken distress calls.
 
 # Requirements
-This is my experiment eviroument:
+This is my experiment environment:
 - python3.7
 - pytorch+cuda11.2
 
